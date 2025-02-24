@@ -1,4 +1,6 @@
-opt = vim.opt
+require('config.options')
+require('config.keymaps')
+require('config.autocmds')
+require('config.lazy')
 
-opt.number = true
-opt.relativenumber = true
+vim.cmd("colorscheme cyberdream")
