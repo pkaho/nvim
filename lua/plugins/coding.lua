@@ -29,5 +29,11 @@ return {
         suffix_next = "n"
       }
     }
-  }
+  },
+
+  {
+    "echasnovski/mini.align",
+    version = false,
+    opts = {}
+  },
 }
