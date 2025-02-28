@@ -23,5 +23,5 @@ opt.writebackup = false
 opt.swapfile    = false
 
 if vim.fn.executable("pwsh") == 1 then
-	opt.shell = "pwsh"
+    opt.shell = "pwsh"
 end
