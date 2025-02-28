@@ -10,9 +10,9 @@ opt.inccommand = "split" -- substitute 命令显示预览窗口
 opt.clipboard = "unnamedplus" -- 需要 xclip, hyprland需要wl-clipboard
 opt.mouse = "a"
 
-opt.tabstop     = 2      -- Tab 宽度
-opt.shiftwidth  = 2      -- 缩进宽度
-opt.softtabstop = 2      -- 软 Tab 宽度
+opt.tabstop     = 4      -- Tab 宽度
+opt.shiftwidth  = 4      -- 缩进宽度
+opt.softtabstop = 4      -- 软 Tab 宽度
 opt.expandtab   = true   -- Tab 转换成空格
 
 -- backup:      保存文件时创建一个备份文件，通常以 ~ 作为扩展名，可以通过 backupdir 指定目录
