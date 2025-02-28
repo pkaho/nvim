@@ -18,6 +18,13 @@ return {
     opts_extend = {"spec"},
     opts = {
       preset = "helix", -- classic, modern, helix
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader><tab>", group = "tabs" },
+          { "gs", group = "surround" },
+        },
+      },
     },
     keys = {
       {
@@ -52,5 +59,30 @@ return {
     keys = {
       { "<leader>cp", "<CMD>CccPick<CR>", desc = "ColorPick" },
     }
+  },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      explorer = { enabled = false },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    }
+  },
+
+  {
+    "monaqa/dial.nvim",
+    event = "VeryLazy",
   },
 }
