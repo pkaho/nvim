@@ -85,4 +85,23 @@ return {
         "monaqa/dial.nvim",
         event = "VeryLazy",
     },
+
+    {
+        "kdheepak/lazygit.nvim",
+        lazy = true,
+        cmd = {
+            "LazyGit",
+            "LazyGitConfig",
+            "LazyGitCurrentFile",
+            "LazyGitFilter",
+            "LazyGitFilterCurrentFile",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        keys = {
+            { "<leader>gg", "<CMD>LazyGit<CR>", desc = "LazyGit" }
+        },
+        opts = {}
+    },
 }
