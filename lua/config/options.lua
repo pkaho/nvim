@@ -1,21 +1,30 @@
 local opt = vim.opt
 
-opt.number = true
-opt.relativenumber = true
-opt.hidden = true -- 切换 buffer 的时候，不提示当前 buffer 未保存
-opt.wrap = false -- 包裹行
-opt.cursorline = true -- 显示光标行
-opt.termguicolors = true -- 启动终端的 True Color
-opt.inccommand = "split" -- substitute 命令显示预览窗口
-opt.clipboard = "unnamedplus" -- 需要 xclip, hyprland需要wl-clipboard
-opt.mouse = "a"
+vim.g.snacks_animate = false  -- 禁用 Snacks 动画
+
+opt.number = true             -- 行号
+opt.relativenumber = true     --相对行号
+opt.hidden = true             -- 切换 buffer 的时候，不提示当前 buffer 未保存
+opt.wrap = false              -- 包裹行
+opt.cursorline = true         -- 显示光标行
+opt.termguicolors = true      -- 启动终端的 True Color
+opt.inccommand = "split"      -- substitute 命令显示预览窗口
+opt.clipboard = "unnamedplus" -- 需要 xclip, hyprland 需要 wl-clipboard
+opt.mouse = "a"               -- 启用鼠标支持
+-- opt.grepprg = "rg --vimgrep"
+-- opt.linebreak = true
+-- opt.list = true
+-- opt.pumblend = 10
+-- opt.pumheight = 10
+
+opt.ignorecase = true -- 忽略大小写
+opt.smartcase = true  -- 当搜索内容包含大写时, 不忽略大小写
 
 opt.tabstop     = 4      -- Tab 宽度
 opt.shiftwidth  = 4      -- 缩进宽度
 opt.softtabstop = 4      -- 软 Tab 宽度
 opt.expandtab   = true   -- Tab 转换成空格
 
--- undo
 opt.undofile = true
 opt.undolevels = 12345
 
