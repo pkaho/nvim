@@ -65,7 +65,12 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
+        keys = {
+            { "<leader>z", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+            { "<leader>Z", function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+        },
         opts = {
+            animate = { enabled = false  },
             bigfile = { enabled = true },
             dashboard = { enabled = true },
             explorer = { enabled = false },
@@ -78,7 +83,7 @@ return {
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
             words = { enabled = true },
-        }
+        },
     },
 
     {
