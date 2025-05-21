@@ -8,6 +8,7 @@ local map = vim.keymap.set
 map("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Lazy" })
 map("i", "jk", "<ESC>", { desc = "Quit Insert Mode" })
 map("n", "<ESC>", "<CMD>nohlsearch<CR>", { desc = "Unhighlight" })
+map({ "n", "i", "x", "s" }, "<C-s>", "<CMD>w<CR><ESC>", { desc = "Save File" })
 
 -- better move
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -23,6 +24,13 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
+-- better indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+-- commenting
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 -- Move Lines
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
@@ -56,3 +64,4 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
