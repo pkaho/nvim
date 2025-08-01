@@ -1,9 +1,12 @@
+-- 更多options可以参考, `:h option-list`
+
 local opt = vim.opt
 
 opt.clipboard = "unnamedplus" -- 需要xclip, hyprland需要wl-clipboard
 opt.mouse = "a" -- 启用鼠标支持
 opt.hidden = true -- 切换buffer的时候，不提示未保存
 opt.cursorline = true -- 显示光标行
+opt.textwidth = 120 -- 一行文本的最大字符宽度, formatoptions中的tcr会受到影响
 
 -- 行号
 opt.number = true -- 显示行号
