@@ -33,6 +33,16 @@ return {
         }
     },
 
+    -- 预览命令行输入的行号处的内容
+    {
+        "nacro90/numb.nvim",
+        event = "VeryLazy",
+        opts = {
+            show_numbers = true,
+            show_cursorline = true,
+        }
+    },
+
     -- 交互式对齐文本
     {
         "echasnovski/mini.align",
