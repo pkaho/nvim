@@ -12,6 +12,7 @@ opt.mouse = "a"                 -- 全模式鼠标支持
 opt.hidden = true               -- 允许隐藏未保存的缓冲区
 opt.cursorline = true           -- 高亮当前行
 opt.textwidth = 120             -- 行最大宽度(影响自动格式化)
+opt.termguicolors = true        -- 设置真彩色(1670万色), 传统只支持256色(8bit)
 
 --------------------
 -- 行号设置
