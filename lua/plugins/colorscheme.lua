@@ -12,6 +12,18 @@ return {
         },
     },
 
+    -- rose-pine
+    {
+        "rose-pine/neovim",
+        name = "rose-pine",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+        config = function()
+            vim.cmd("colorscheme rose-pine")
+        end
+    },
+
     -- cyberdream
     {
         "scottmckendry/cyberdream.nvim",
@@ -27,18 +39,6 @@ return {
             italic_comments = true,
             variant = "auto", -- default, auto, light
         },
-    },
-
-    -- rose-pine
-    {
-        "rose-pine/neovim",
-        name = "rose-pine",
-        lazy = false,
-        priority = 1000,
-        opts = {},
-        config = function()
-            vim.cmd("colorscheme rose-pine")
-        end
     },
 
     -- catppuccin
