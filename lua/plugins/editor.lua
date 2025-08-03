@@ -51,7 +51,7 @@ return {
         event = "VeryLazy",
         opts = {},
         keys = {
-            { "<leader>cp", "<CMD>CccPick<CR>", desc = "ColorPick" },
+            { "<leader>cp", "<cmd>CccPick<cr>", desc = "ColorPick" },
         }
     },
 
@@ -70,7 +70,7 @@ return {
             "nvim-lua/plenary.nvim",
         },
         keys = {
-            { "<leader>gg", "<CMD>LazyGit<CR>", desc = "LazyGit" }
+            { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
         },
     },
 
