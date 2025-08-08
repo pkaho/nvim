@@ -12,17 +12,18 @@ opt.mouse = "a"                    -- 全模式鼠标支持
 opt.hidden = true                  -- 允许隐藏未保存的缓冲区
 opt.cursorline = true              -- 高亮当前行
 opt.textwidth = 120                -- 行最大宽度(影响自动格式化)
-opt.termguicolors = true           -- 设置真彩色(1670万色), 传统只支持256色(8bit)
+opt.termguicolors = true           -- 设置真彩色1670万色(24bit), 传统只支持256色(8bit)
 opt.autowrite = true               -- 切换缓冲区或离开nvim时自动保存
 opt.list = true                    -- 显示不可见字符
 opt.laststatus = 3                 -- 全局状态栏(所有窗口共享一个状态栏)
 opt.showmode = true                -- 显示模式
 opt.ruler = true                   -- 状态栏显示光标位置
 opt.timeoutlen = 300               -- 按键超出时间
-opt.updatetime = 200               -- 触发CursorHold事件的时间间隔
+opt.updatetime = 300               -- 触发CursorHold事件的时间间隔, 同时是无内容输入写入swp文件的间隔时间
 opt.virtualedit = "block"          -- 可视块模式下允许光标移动到无文本处
 opt.wildmode = "longest:full,full" -- 命令行补全模式
 opt.conceallevel = 2               -- 隐藏某些文本(如Markdown的粗/斜体标记)
+opt.signcolumn = "yes"             -- 设置符号列ui始终显示, 避免ui跳动
 
 --------------------
 -- 基本设置
