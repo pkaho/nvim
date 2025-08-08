@@ -87,3 +87,60 @@ vim.api.nvim_create_autocmd({ "BufWinLeave", "BufWinEnter" }, {
     end,
     desc = "Remember and restore folds when leaving/entering buffers",
 })
+
+-- nvim-lspconfig 官方自动折叠导入内容
+vim.api.nvim_create_autocmd('LspNotify', {
+    group = augroup("auto_fold_imports"),
+    callback = function(args)
+        if args.data.method == 'textDocument/didOpen' then
+            vim.lsp.foldclose('imports', vim.fn.bufwinid(args.buf))
+        end
+    end,
+})
+
+-- 当光标停留在错误行时显示浮动窗口
+-- vim.api.nvim_create_autocmd("CursorHold", {
+--     callback = function()
+--         local opts = {
+--             focusable = false,
+--             close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+--             border = 'rounded',
+--             source = 'always',
+--             prefix = ' ',
+--         }
+--         vim.diagnostic.open_float(nil, opts)
+--     end
+-- })
+
+
+-- 更智能的显示（仅在诊断存在的行触发）
+local ns = vim.api.nvim_create_namespace('dynamic_diag')
+-- vim.api.nvim_create_autocmd({"CursorMoved", "CursorMovedI", "CursorHold"}, {
+--     callback = function()
+--         -- 清除之前的高亮
+--         vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+--
+--         -- 获取当前行诊断
+--         local line = vim.fn.line('.') - 1
+--         local diags = vim.diagnostic.get(0, { lnum = line })
+--
+--         if #diags == 0 then return end
+--
+--         -- 自定义虚拟文本格式
+--         local lines = {}
+--         for _, d in ipairs(diags) do
+--             table.insert(lines, string.format(
+--                 "%s %s",
+--                 ({ " ", " ", " ", " " })[d.severity],
+--                 d.message:gsub("\n", " ")
+--             ))
+--         end
+--
+--         -- 手动添加虚拟文本
+--         vim.api.nvim_buf_set_extmark(0, ns, line, 0, {
+--             virt_text = { { table.concat(lines, " | "), "DiagnosticVirtualTextInfo" } },
+--             virt_text_pos = 'eol', -- 行尾显示
+--             hl_mode = 'combine'
+--         })
+--     end
+-- })
