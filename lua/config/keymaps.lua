@@ -8,6 +8,7 @@ local map = vim.keymap.set
 map("i", "jk", "<esc>", { desc = "Quit Insert Mode" })
 map("n", "<esc>", "<cmd>nohlsearch<cr>", { desc = "Unhighlight" })
 map({ "n", "i", "x", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- wrap 启用的时候, 不会跳过续行
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
