@@ -5,7 +5,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {},
     keys = {
-        { "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" } },
+        { "<leader>bb", "<cmd>e #<cr>", desc = "Switch to Other Buffer" },
         { "<leader>bp", "<cmd>BufferLineTogglePin<cr>", desc = "Toggle Pin" },
         { "<leader>bP", "<cmd>BufferLineGroupClose ungrouped<cr>", desc = "Delete Non-Pinned Buffers" },
         { "<leader>br", "<cmd>BufferLineCloseRight<cr>", desc = "Delete Buffers to the Right" },
