@@ -1,7 +1,5 @@
--- 搜索替换: 跨文件全局搜索与替换
--- (文件搜索 / grep 类 picker 在 snacks.lua 中, 快速跳转在 flash.lua 中)
 return {
-    -- grug-far: 跨文件全局搜索与替换 (<leader>sr)
+    -- grug-far: 跨文件全局搜索与替换
     {
         "MagicDuck/grug-far.nvim",
         cmd = { "GrugFar", "GrugFarWithin" },
