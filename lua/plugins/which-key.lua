@@ -1,5 +1,5 @@
 return {
-    -- which-key: 按键提示 (helix 预设, 底部面板风格)
+    -- which-key: 按键提示
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
