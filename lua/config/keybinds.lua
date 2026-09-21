@@ -1,0 +1,117 @@
+--                                                *map-table*
+--  Mode | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+-- ------+------+-----+-----+-----+-----+-----+------+------+
+--   n   | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+--   !   |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+--   i   |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+--   c   |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+--   v   |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+--   x   |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+--   s   |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+--   o   |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+--   t   |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+--   l   |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+local map = vim.keymap.set
+
+map({ "i" }, "jk", "<Esc>", { desc = "Quit Insert Mode" })
+map({ "n" }, "<Esc>", "<CMD>nohlsearch<CR>", { desc = "Stop Highlight" })
+map({ "n" }, "<leader>qq", "<CMD>qa<CR>", { desc = "Quit" })
+
+map({ "i" }, "<C-l>", "<C-o>zz", { desc = "Line at center of window" })
+map({ "i" }, "<C-j>", "<C-o>o", { desc = "Begin a new line below the cursor and insert text" })
+-- 不设"上方插行"快捷键：终端里 Ctrl-I 与 Tab 同字节（0x09）无法区分，映射 <C-i> 会劫持 Tab 缩进；需要时用 <C-o>O
+map({ "i" }, "<C-a>", "<C-o>^", { desc = "To the start of the line" })
+map({ "i" }, "<C-e>", "<C-o>$", { desc = "To the end of the line" })
+
+map({ "n", "i", "x", "s" }, "<C-s>", "<CMD>silent w<CR><Esc>", { desc = "Save File" })
+
+-- wrap 启用的时候不会跳过续航
+map({ "n", "x" }, "j", 'v:count == 0 ? "gj" : "j"', { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", 'v:count == 0 ? "gk" : "k"', { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", 'v:count == 0 ? "gj" : "j"', { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", 'v:count == 0 ? "gk" : "k"', { desc = "Up", expr = true, silent = true })
+
+-- 快速跳转行首/行尾
+map({ "n", "v", "o" }, "gh", "^", { desc = "To the start of the line" })
+map({ "n", "v", "o" }, "gl", "$", { desc = "To the end of the line" })
+
+-- 在窗口之间移动
+map({ "n" }, "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+map({ "n" }, "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+map({ "n" }, "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+map({ "n" }, "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+
+-- 分割窗口
+map({ "n" }, "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
+map({ "n" }, "<leader>\\", "<C-W>v", { desc = "Split Window Right", remap = true })
+map({ "n" }, "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+
+-- 连续缩进
+map({ "v" }, "<", "<gv")
+map({ "v" }, ">", ">gv")
+
+-- 快速将当前行向上/下移动
+map({ "n" }, "<A-j>", '<CMD>execute "move .+" . v:count1<CR>==', { desc = "Move Down" })
+map({ "n" }, "<A-k>", '<CMD>execute "move .-" . (v:count1 + 1)<CR>==', { desc = "Move Up" })
+map({ "i" }, "<A-j>", "<esc><CMD>m .+1<CR>==gi", { desc = "Move Down" })
+map({ "i" }, "<A-k>", "<esc><CMD>m .-2<CR>==gi", { desc = "Move Up" })
+map({ "v" }, "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<CR>gv=gv", { desc = "Move Down" })
+map({ "v" }, "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<CR>gv=gv", { desc = "Move Up" })
+
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+-- 在/或者?的搜索模式中, n始终向下, N始终向上
+map({ "n" }, "n", '"Nn"[v:searchforward]."zv"', { expr = true, desc = "Next Search Result" })
+map({ "n" }, "N", '"nN"[v:searchforward]."zv"', { expr = true, desc = "Prev Search Result" })
+map({ "x", "o" }, "n", '"Nn"[v:searchforward]', { expr = true, desc = "Next Search Result" })
+map({ "x", "o" }, "N", '"nN"[v:searchforward]', { expr = true, desc = "Prev Search Result" })
+
+-- 调整窗口大小
+map({ "n" }, "<C-Up>", "<CMD>resize +2<CR>", { desc = "Increase Window Height" })
+map({ "n" }, "<C-Down>", "<CMD>resize -2<CR>", { desc = "Decrease Window Height" })
+map({ "n" }, "<C-Left>", "<CMD>vertical resize -2<CR>", { desc = "Decrease Window Width" })
+map({ "n" }, "<C-Right>", "<CMD>vertical resize +2<CR>", { desc = "Increase Window Width" })
+
+-- tab 相关
+map({ "n" }, "<leader><tab><tab>", "<CMD>tabnew<CR>", { desc = "New Tab" })
+map({ "n" }, "<leader><tab>]", "<CMD>tabnext<CR>", { desc = "Next Tab" })
+map({ "n" }, "<leader><tab>[", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
+map({ "n" }, "<leader><tab>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
+map({ "n" }, "<leader><tab>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
+map({ "n" }, "<leader><tab>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
+map({ "n" }, "<leader><tab>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
+
+-- LSP / Diagnostic
+local diagnostic_goto = function(next, severity)
+    return function()
+        vim.diagnostic.jump({
+            count = (next and 1 or -1) * vim.v.count1,
+            severity = severity and vim.diagnostic.severity[severity] or nil,
+            float = true,
+        })
+    end
+end
+map({ "n" }, "<leader>cd", function()
+    local float_bufnr = vim.diagnostic.open_float()
+    if float_bufnr then
+        local wins = vim.fn.win_findbuf(float_bufnr)
+        if wins[1] then
+            vim.api.nvim_set_current_win(wins[1])
+        end
+    end
+end, { desc = "Line Diagnostics" })
+map({ "n" }, "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
+map({ "n" }, "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
+map({ "n" }, "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+map({ "n" }, "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+map({ "n" }, "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
+map({ "n" }, "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+
+map({ "n" }, "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+map({ "n" }, "<leader>uI", function()
+    vim.treesitter.inspect_tree()
+    vim.api.nvim_input("I")
+end, { desc = "Inspect Tree" })
