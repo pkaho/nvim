@@ -33,7 +33,8 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
     end,
 })
 
--- 禁用换行自动添加注释
+-- 移除 formatoptions 的 c/r/o：禁用"注释内自动换行 / 回车自动补注释前缀"等行为
+-- （options.lua 设置的 "jcroqlnt" 在此被移除 c/r/o，实际生效值为 jqlnt）
 vim.api.nvim_create_autocmd({ "BufEnter", "InsertEnter" }, {
     group = augroup("format_options"),
     pattern = { "*" },
