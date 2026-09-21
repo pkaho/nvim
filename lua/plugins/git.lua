@@ -1,5 +1,5 @@
 return {
-    -- lazygit.nvim: nvim 内调用 lazygit 的 Git TUI (<leader>gg)
+    -- lazygit: nvim 内调用 lazygit 的 Git TUI
     {
         "kdheepak/lazygit.nvim",
         lazy = true,
@@ -89,7 +89,8 @@ return {
             end,
         },
     },
-    -- 同一插件的第二个 spec: lazy.nvim 会将两条 spec 合并 (opts 函数追加), 在此新增 <leader>uG 切换 Git 行号符号显示
+    -- 同一插件的第二个 spec: lazy.nvim 会将两条 spec 合并 (opts 函数追加)
+    -- 在此新增 <leader>uG 切换 Git 行号符号显示
     {
         "lewis6991/gitsigns.nvim",
         opts = function()
