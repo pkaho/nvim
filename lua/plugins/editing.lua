@@ -1,6 +1,5 @@
--- 编辑增强: 自动配对 / 拆合代码块 / 行号美化 / 选中范围高亮
 return {
-    -- ultimate-autopair: 自动配对/补全括号引号 (insert 与命令行模式)
+    -- ultimate-autopair: 自动配对/补全括号引号
     {
         "altermo/ultimate-autopair.nvim",
         event = { "InsertEnter", "CmdlineEnter" },
@@ -9,7 +8,7 @@ return {
         },
     },
 
-    -- treesj: 拆分/合并代码块 (单行展开多行/多行折叠单行, <leader>cj 切换)
+    -- treesj: 拆分/合并代码块
     {
         "Wansmer/treesj",
         cmd = "TSJToggle",
@@ -21,7 +20,7 @@ return {
         },
     },
 
-    -- numb: 跳转行号时浮动显示目标行号 (可点击跳转)
+    -- numb: 跳转行号时预览该位置内容
     {
         "nacro90/numb.nvim",
         event = "CmdlineEnter", -- 仅在输入命令行时加载
@@ -31,14 +30,14 @@ return {
         }
     },
 
-    -- range-highlight: 高亮视觉/操作符模式选中的文本范围
+    -- range-highlight: 高亮命令模式选中的文本范围
     {
         "winston0410/range-highlight.nvim",
         event = "VeryLazy",
         opts = {}
     },
 
-    -- comfy-line-numbers: 美化行号 (基于相对行号的渐变/自定义样式)
+    -- comfy-line-numbers: 左手完成[n]操作
     {
         "mluders/comfy-line-numbers.nvim",
         lazy = false, -- 行号渲染需启动时生效, 插件很小不影响启动速度
