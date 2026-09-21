@@ -17,19 +17,21 @@ vim.g.maplocalleader = "\\"
 
 local map = vim.keymap.set
 
-map({ "i" }, "jk", "<Esc>", { desc = "Quit Insert Mode" })
 map({ "n" }, "<Esc>", "<CMD>nohlsearch<CR>", { desc = "Stop Highlight" })
 map({ "n" }, "<leader>qq", "<CMD>qa<CR>", { desc = "Quit" })
 
+-- Insert 模式快捷键
+map({ "i" }, "jk", "<Esc>", { desc = "Quit Insert Mode" })
 map({ "i" }, "<C-l>", "<C-o>zz", { desc = "Line at center of window" })
 map({ "i" }, "<C-j>", "<C-o>o", { desc = "Begin a new line below the cursor and insert text" })
--- 不设"上方插行"快捷键：终端里 Ctrl-I 与 Tab 同字节（0x09）无法区分，映射 <C-i> 会劫持 Tab 缩进；需要时用 <C-o>O
+map({ "i" }, "<C-i>", "<C-o>O", { desc = "Begin a new line above the cursor and insert text" })
 map({ "i" }, "<C-a>", "<C-o>^", { desc = "To the start of the line" })
 map({ "i" }, "<C-e>", "<C-o>$", { desc = "To the end of the line" })
 
+-- 自动保存
 map({ "n", "i", "x", "s" }, "<C-s>", "<CMD>silent w<CR><Esc>", { desc = "Save File" })
 
--- wrap 启用的时候不会跳过续航
+-- wrap 启用时不会跳过续行（用 gj/gk 按显示行移动）
 map({ "n", "x" }, "j", 'v:count == 0 ? "gj" : "j"', { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "k", 'v:count == 0 ? "gk" : "k"', { desc = "Up", expr = true, silent = true })
 map({ "n", "x" }, "<Down>", 'v:count == 0 ? "gj" : "j"', { desc = "Down", expr = true, silent = true })
@@ -90,7 +92,10 @@ local diagnostic_goto = function(next, severity)
         vim.diagnostic.jump({
             count = (next and 1 or -1) * vim.v.count1,
             severity = severity and vim.diagnostic.severity[severity] or nil,
-            float = true,
+            -- nvim 0.12: float 参数已废弃 (0.14 移除), 用 on_jump 等价实现 (跳转后显示浮窗, 不抢焦点)
+            on_jump = function(_, bufnr)
+                vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+            end,
         })
     end
 end
@@ -110,6 +115,7 @@ map({ "n" }, "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map({ "n" }, "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map({ "n" }, "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
+-- UI / 结构检查（vim.show_pos 查看光标处高亮组，treesitter 检查语法树）
 map({ "n" }, "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map({ "n" }, "<leader>uI", function()
     vim.treesitter.inspect_tree()
