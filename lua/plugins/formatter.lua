@@ -1,6 +1,5 @@
--- 格式化配置: conform.nvim 异步格式化, 工具用 :MasonInstall 手动安装
 return {
-    -- conform.nvim: 统一格式化入口, 保存时自动格式化
+    -- conform: 统一格式化入口
     {
         "stevearc/conform.nvim",
         event = { "BufWritePre" },
