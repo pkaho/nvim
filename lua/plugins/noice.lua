@@ -1,6 +1,5 @@
--- noice: 美化 cmdline / 消息 / popupmenu, 接管 vim.notify
--- 注意: 与 snacks.notifier 冲突, 已在 snacks.lua 中禁用后者
 return {
+    -- noice: 消息通知工具
     {
         "folke/noice.nvim",
         event = "VeryLazy",
@@ -22,7 +21,6 @@ return {
                 desc = "Redirect Cmdline",
                 mode = "c"
             },
-            -- <c-f>/<c-b> 滚动 LSP 浮窗的映射由 lsp.lua 的 on_attach 按 buffer 绑定（仅 LSP attach 后生效），这里不再全局定义
         },
         opts = {
             messages = {
@@ -42,6 +40,7 @@ return {
                     },
                 },
             },
+            -- 接管 LSP 浮窗文档渲染（markdown 转换 / 样式美化），替代原生纯文本展示
             lsp = {
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
