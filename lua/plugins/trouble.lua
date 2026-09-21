@@ -1,5 +1,5 @@
--- trouble: 诊断 / quickfix / LSP 列表窗口
 return {
+    -- trouble: 诊断 / quickfix / LSP 列表窗口
     {
         "folke/trouble.nvim",
         cmd = "Trouble",
