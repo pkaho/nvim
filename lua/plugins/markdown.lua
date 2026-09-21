@@ -1,4 +1,3 @@
--- markdown: 渲染增强
 return {
     -- render-markdown: markdown 预览
     {
