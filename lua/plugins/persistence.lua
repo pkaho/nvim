@@ -1,5 +1,5 @@
--- persistence: 自动保存/恢复会话
 return {
+    -- persistence: 自动保存/恢复会话
     {
         "folke/persistence.nvim",
         event = "BufReadPre",
