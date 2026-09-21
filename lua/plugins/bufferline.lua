@@ -1,5 +1,5 @@
 return {
-    -- bufferline: 顶部 buffer 标签栏 (斜角分隔, 显示 LSP 诊断)
+    -- bufferline: 顶部 buffer 标签栏
     {
         "akinsho/bufferline.nvim",
         event = "VeryLazy",
@@ -43,6 +43,12 @@ return {
                     return vim.trim(ret)
                 end,
                 offsets = {
+                    {
+                        filetype = "neo-tree",
+                        text = "Neo-tree",
+                        highlight = "Directory",
+                        text_align = "left",
+                    },
                     {
                         filetype = "snacks_layout_box",
                     },
