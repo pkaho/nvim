@@ -52,7 +52,8 @@ return {
                             end,
                         },
                         -- stylua: ignore
-                        -- opt.showmode = false 关闭模式显示导致此功能无效
+                        -- opt.showmode = false 关闭模式显示会减少这里的内容显示
+                        -- 录制宏会有提示
                         {
                             function() return " " .. require("noice").api.status.mode.get() end,
                             cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
@@ -86,7 +87,7 @@ return {
                     },
                     lualine_y = {
                         -- stylua: ignore
-                        { "progress", separator = " ", padding = { left = 1, right = 0 } },
+                        { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
                         { "location", padding = { left = 0, right = 1 } },
                     },
                     lualine_z = {
