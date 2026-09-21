@@ -1,3 +1,5 @@
+-- LSP 核心配置: mason 服务器管理 / 补全引擎 / LSP 客户端与全局按键
+-- 按语言拆分的 server 专属配置放在本目录的其他文件 (如 lua.lua)
 return {
     -- mason: LSP 服务器 / 格式化 / 静态检查工具的安装与管理
     { "mason-org/mason.nvim", opts = {} },
@@ -67,8 +69,8 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
+                { path = "snacks.nvim",        words = { "Snacks" } },
+                { path = "nvim-lspconfig",     words = { "lspconfig.settings" } },
             },
         },
     },
@@ -78,10 +80,10 @@ return {
         "dnlhc/glance.nvim",
         -- 仅由 keys 懒加载（原先 lazy = false 会取消懒加载，导致启动即加载）
         keys = {
-            { "<leader>cgd", "<CMD>Glance definitions<CR>", desc = "Glance Definition" },
-            { "<leader>cgr", "<CMD>Glance references<CR>", desc = "Glance Reference" },
+            { "<leader>cgd", "<CMD>Glance definitions<CR>",      desc = "Glance Definition" },
+            { "<leader>cgr", "<CMD>Glance references<CR>",       desc = "Glance Reference" },
             { "<leader>cgy", "<CMD>Glance type_definitions<CR>", desc = "Glance Type Definition" },
-            { "<leader>cgm", "<CMD>Glance implementations<CR>", desc = "Glance Implementation" },
+            { "<leader>cgm", "<CMD>Glance implementations<CR>",  desc = "Glance Implementation" },
         },
         opts = {},
     },
@@ -165,24 +167,11 @@ return {
             -- 由 blink.cmp 注入 LSP 补全 capabilities
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-            -- nvim 0.11+ 原生 LSP 配置: 默认配置应用于所有服务器, lua_ls 单独覆盖
+            -- nvim 0.11+ 原生 LSP 配置: 默认配置应用于所有服务器, 各语言的专属配置见本目录其他文件
             -- (mason-lspconfig 的 automatic_enable 会自动 vim.lsp.enable() 已安装的服务器)
             vim.lsp.config("*", {
                 on_attach = on_attach,
                 capabilities = capabilities,
-            })
-
-            vim.lsp.config("lua_ls", {
-                settings = {
-                    Lua = {
-                        runtime = { version = "LuaJIT" }, -- Neovim 内置 LuaJIT, 避免按 5.4 推断
-                        telemetry = { enable = false },
-                        diagnostics = {
-                            -- LuaLS 3.9+ 不再默认把 require 视为全局, 需显式声明
-                            globals = { "vim", "require" },
-                        },
-                    },
-                },
             })
         end,
     },
