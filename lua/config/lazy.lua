@@ -15,21 +15,17 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- 使用 nerdfont 时传 nil 走 lazy.nvim 默认 nerdfont 图标, 否则传自定义 unicode 图标
-local have_nerd = true
--- Setup lazy.nvim
+local have_nerd = true -- 是否使用 nerdfont，否则使用后面的 Unicode 图标
 require("lazy").setup({
     spec = {
-        -- import your plugins
+        -- 导入 lua/plugins/ 下的所有插件配置
         { import = "plugins" },
     },
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
+    -- 安装面板主题设置
     install = { colorscheme = { "habamax" } },
-    -- automatically check for plugin updates
+    -- 自动检查插件更新
     checker = { enabled = true },
 }, {
-    -- 如果使用 nerdfont, 使用 lazy.nvim 默认的 nerdfont 图标, 否则使用定义的 unicode 图标
     ui = {
         icons = have_nerd and nil or {
             cmd = "⌘",
