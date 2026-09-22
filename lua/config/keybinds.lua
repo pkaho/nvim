@@ -23,8 +23,7 @@ map({ "n" }, "<leader>qq", "<CMD>qa<CR>", { desc = "Quit" })
 -- Insert 模式快捷键
 map({ "i" }, "jk", "<Esc>", { desc = "Quit Insert Mode" })
 map({ "i" }, "<C-l>", "<C-o>zz", { desc = "Line at center of window" })
-map({ "i" }, "<C-j>", "<C-o>o", { desc = "Begin a new line below the cursor and insert text" })
-map({ "i" }, "<C-i>", "<C-o>O", { desc = "Begin a new line above the cursor and insert text" })
+map({ "i" }, "<C-j>", "<C-o>o", { desc = "Begin a new line below and insert" })
 map({ "i" }, "<C-a>", "<C-o>^", { desc = "To the start of the line" })
 map({ "i" }, "<C-e>", "<C-o>$", { desc = "To the end of the line" })
 

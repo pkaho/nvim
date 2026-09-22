@@ -35,7 +35,7 @@ return {
                 completion = {
                     list = { selection = { preselect = false } },
                     menu = {
-                        auto_show = function(ctx)
+                        auto_show = function(_) -- 仅用于命令行模式，参数未使用
                             return vim.fn.getcmdtype() == ":"
                         end,
                     },
@@ -69,8 +69,8 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim",        words = { "Snacks" } },
-                { path = "nvim-lspconfig",     words = { "lspconfig.settings" } },
+                { path = "snacks.nvim", words = { "Snacks" } },
+                { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
             },
         },
     },
@@ -80,10 +80,10 @@ return {
         "dnlhc/glance.nvim",
         -- 仅由 keys 懒加载（原先 lazy = false 会取消懒加载，导致启动即加载）
         keys = {
-            { "<leader>cgd", "<CMD>Glance definitions<CR>",      desc = "Glance Definition" },
-            { "<leader>cgr", "<CMD>Glance references<CR>",       desc = "Glance Reference" },
+            { "<leader>cgd", "<CMD>Glance definitions<CR>", desc = "Glance Definition" },
+            { "<leader>cgr", "<CMD>Glance references<CR>", desc = "Glance Reference" },
             { "<leader>cgy", "<CMD>Glance type_definitions<CR>", desc = "Glance Type Definition" },
-            { "<leader>cgm", "<CMD>Glance implementations<CR>",  desc = "Glance Implementation" },
+            { "<leader>cgm", "<CMD>Glance implementations<CR>", desc = "Glance Implementation" },
         },
         opts = {},
     },
@@ -114,6 +114,7 @@ return {
 
                 -- 悬浮文档 / 签名
                 map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+                -- 签名帮助
                 map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
                 -- hover/signature 浮窗内用 <c-f>/<c-b> 滚动, 无浮窗时回退默认翻页
