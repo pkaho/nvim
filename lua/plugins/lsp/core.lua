@@ -100,8 +100,18 @@ return {
         config = function()
             -- LSP 附加到当前 buffer 时设置的按键 (buffer-local)
             local on_attach = function(_, bufnr)
-                local map = function(mode, lhs, rhs, desc)
-                    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+                local map = function(mode, lhs, rhs, desc, opts)
+                    opts = opts or {}
+                    vim.keymap.set(
+                        mode,
+                        lhs,
+                        rhs,
+                        vim.tbl_extend("force", {
+                            buffer = bufnr,
+                            desc = desc,
+                            silent = true,
+                        }, opts)
+                    )
                 end
 
                 -- 跳转
@@ -118,16 +128,16 @@ return {
                 map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
                 -- hover/signature 浮窗内用 <c-f>/<c-b> 滚动, 无浮窗时回退默认翻页
-                vim.keymap.set({ "i", "n", "s" }, "<c-f>", function()
+                map({ "i", "n", "s" }, "<c-f>", function()
                     if not require("noice.lsp").scroll(4) then
                         return "<c-f>"
                     end
-                end, { buffer = bufnr, expr = true, silent = true, desc = "Scroll Float Forward" })
-                vim.keymap.set({ "i", "n", "s" }, "<c-b>", function()
+                end, "Scroll Float Forward", { expr = true })
+                map({ "i", "n", "s" }, "<c-b>", function()
                     if not require("noice.lsp").scroll(-4) then
                         return "<c-b>"
                     end
-                end, { buffer = bufnr, expr = true, silent = true, desc = "Scroll Float Backward" })
+                end, "Scroll Float Backward", { expr = true })
 
                 -- 重构
                 map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
