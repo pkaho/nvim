@@ -1,22 +1,22 @@
 return {
     -- lazygit: nvim 内调用 lazygit 的 Git TUI
-    {
-        "kdheepak/lazygit.nvim",
-        lazy = true,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        cmd = {
-            "LazyGit",
-            "LazyGitConfig",
-            "LazyGitCurrentFile",
-            "LazyGitFilter",
-            "LazyGitFilterCurrentFile",
-        },
-        keys = {
-            { "<leader>gg", "<cmd>LazyGit<CR>", desc = "LazyGit" },
-        },
-    },
+    -- {
+    --     "kdheepak/lazygit.nvim",
+    --     lazy = true,
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --     },
+    --     cmd = {
+    --         "LazyGit",
+    --         "LazyGitConfig",
+    --         "LazyGitCurrentFile",
+    --         "LazyGitFilter",
+    --         "LazyGitFilterCurrentFile",
+    --     },
+    --     keys = {
+    --         { "<leader>gg", "<cmd>LazyGit<CR>", desc = "LazyGit" },
+    --     },
+    -- },
 
     -- gitsigns: Git 改动符号、hunk 跳转/暂存/重置/blame
     {
@@ -77,14 +77,15 @@ return {
 
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 
+                map({ "n" }, "<leader>gg", function () Snacks.lazygit({ cwd = root_git() }) end, "Lazygit (Root Dir)" )
+                map({ "n" }, "<leader>gG", function () Snacks.lazygit() end, "Lazygit (cwd)" )
+                map({ "n" }, "<leader>gL", function() Snacks.picker.git_log() end, "Git Log (cwd)" )
+                map({ "n" }, "<leader>gb", function() Snacks.picker.git_log_line() end, "Git Blame Line" )
+                map({ "n" }, "<leader>gf", function() Snacks.picker.git_log_file() end, "Git Blame Line" )
+                map({ "n" }, "<leader>gl", function() Snacks.picker.git_log_line({ cwd = root_git() }) end,  "Git Log" )
                 map({ "n", "x" }, "<leader>gB", function() Snacks.gitbrowse() end, "Git Browse (open)")
                 map({ "n", "x" }, "<leader>gY", function()
-                    Snacks.gitbrowse({
-                        open = function(url)
-                            vim.fn.setreg("+", url)
-                        end,
-                        notify = false
-                    })
+                    Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
                 end, "Git Browse (copy)")
             end,
         },
