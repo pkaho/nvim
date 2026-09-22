@@ -85,6 +85,15 @@ map({ "n" }, "<leader><tab>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" }
 map({ "n" }, "<leader><tab>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
 map({ "n" }, "<leader><tab>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
 
+-- tabs
+map("n", "<leader><Tab>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
+map("n", "<leader><Tab>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
+map("n", "<leader><Tab>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
+map("n", "<leader><Tab><Tab>", "<CMD>tabnew<CR>", { desc = "New Tab" })
+map("n", "<leader><Tab>]", "<CMD>tabnext<CR>", { desc = "Next Tab" })
+map("n", "<leader><Tab>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
+map("n", "<leader><Tab>[", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
+
 -- LSP / Diagnostic
 local diagnostic_goto = function(next, severity)
     return function()
