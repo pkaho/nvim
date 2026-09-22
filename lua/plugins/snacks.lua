@@ -1,3 +1,20 @@
+local function term_nav(dir)
+    ---@param self snacks.terminal
+    return function(self)
+        return self:is_floating() and "<c-" .. dir .. ">"
+            or vim.schedule(function()
+                vim.cmd.wincmd(dir)
+            end)
+    end
+end
+
+local function root_git()
+    local root = M.get()
+    local git_root = vim.fs.find(".git", { path = root, upward = true })[1]
+    local ret = git_root and vim.fn.fnamemodify(git_root, ":h") or root
+    return ret
+end
+
 return {
     -- snacks.nvim: 多功能工具集
     {
@@ -9,18 +26,21 @@ return {
         end,
         keys = {
             -- stylua: ignore start
-            { "<leader><Space>", "<cmd>lua Snacks.picker.files()<CR>",         desc = "File Search" },
-            { "<leader>/",       "<cmd>lua Snacks.picker.grep()<CR>",          desc = "Grep" },
-            { '<leader>"',       "<cmd>lua Snacks.picker.registers()<CR>",     desc = "Registers" },
-            { "<leader>sh",      "<cmd>lua Snacks.picker.help()<CR>",          desc = "Search Help" },
-            { "<leader>sb",      "<cmd>lua Snacks.picker.grep_buffers()<CR>",  desc = "Grep inside Buffers" },
-            { "<leader>sp",      "<cmd>lua Snacks.picker.projects()<CR>",      desc = "Search .git Projects" },
-            { "<leader>sk",      "<cmd>lua Snacks.picker.keymaps()<CR>",       desc = "Search Keymaps" },
-            { "<leader>st",      "<cmd>lua Snacks.picker.todo_comments()<CR>", desc = "Search Todo" },
-            { "<leader>e",       "<cmd>lua Snacks.explorer()<CR>",             desc = "Explorer" },
-            { "<leader>cz",      "<cmd>lua Snacks.zen.zoom()<CR>",             desc = "Toggle Zoom" },
-            { "<leader>cZ",      "<cmd>lua Snacks.zen()<CR>",                  desc = "Toggle Zen" },
-            { "<leader>,",       "<cmd>lua Snacks.picker.buffers()<CR>",       desc = "Search Buffers" },
+            { "<leader><Space>", function() Snacks.picker.files() end,         desc = "File Search" },
+            { "<leader>/",       function() Snacks.picker.grep() end,          desc = "Grep" },
+            { '<leader>"',       function() Snacks.picker.registers() end,     desc = "Registers" },
+            { "<leader>sh",      function() Snacks.picker.help() end,          desc = "Search Help" },
+            { "<leader>sb",      function() Snacks.picker.grep_buffers() end,  desc = "Grep inside Buffers" },
+            { "<leader>sp",      function() Snacks.picker.projects() end,      desc = "Search .git Projects" },
+            { "<leader>sk",      function() Snacks.picker.keymaps() end,       desc = "Search Keymaps" },
+            { "<leader>st",      function() Snacks.picker.todo_comments() end, desc = "Search Todo" },
+            { "<leader>e",       function() Snacks.explorer() end,             desc = "Explorer" },
+            { "<leader>cz",      function() Snacks.zen.zoom() end,             desc = "Toggle Zoom" },
+            { "<leader>cZ",      function() Snacks.zen() end,                  desc = "Toggle Zen" },
+            { "<leader>,",       function() Snacks.picker.buffers() end,       desc = "Search Buffers" },
+            { "<leader>.",       function() Snacks.scratch() end,              desc = "Toggle Scratch Buffer" },
+            { "<leader>S",       function() Snacks.scratch.select() end,       desc = "Select Scratch Buffer" },
+            { "<leader>dps",     function() Snacks.profiler.scratch() end,     desc = "Profiler Scratch Buffer" },
             -- stylua: ignore end
             {
                 "<c-/>",
@@ -48,6 +68,18 @@ return {
             scroll = { enabled = true },
             statuscolumn = { enabled = false },
             words = { enabled = true },
+            terminal = {
+                win = {
+                    keys = {
+                        nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
+                        nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
+                        nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
+                        nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
+                        hide_slash = { "<C-/>", "hide", desc = "Hide Terminal", mode = "t" },
+                        hide_underscore = { "<c-_>", "hide", desc = "which_key_ignore", mode = "t" },
+                    },
+                },
+            },
             picker = {
                 hidden = true, -- 显示 explorer 中的隐藏文件
                 sources = {
@@ -124,6 +156,8 @@ return {
             Snacks.toggle.scroll():map("<leader>uS")
             Snacks.toggle.profiler():map("<leader>dpp")
             Snacks.toggle.profiler_highlights():map("<leader>dph")
+            Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
+            Snacks.toggle.zen():map("<leader>uz")
             Snacks.toggle
                 .option("conceallevel", {
                     off = 0,
@@ -139,7 +173,11 @@ return {
                 })
                 :map("<leader>uA")
             Snacks.toggle
-                .option("background", { off = "light", on = "dark", name = "Dark Background" })
+                .option("background", {
+                    off = "light",
+                    on = "dark",
+                    name = "Dark Background",
+                })
                 :map("<leader>ub")
         end,
     },
