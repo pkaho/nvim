@@ -23,6 +23,12 @@ return {
             },
         },
         opts = {
+            default_format_opts = {
+                timeout_ms = 3000,
+                async = false,
+                quiet = false,
+                lsp_format = "fallback",
+            },
             formatters_by_ft = {
                 lua = { "stylua" },
                 python = { "ruff_imports", "ruff_format" }, -- black 与 ruff_format 功能重叠（同为整段格式化），只保留 ruff_format：与 black 风格兼容且更快
@@ -43,6 +49,7 @@ return {
                 bash = { "shfmt" },
             },
             formatters = {
+                injected = { options = { ignore_errors = true } },
                 stylua = {
                     prepend_args = { "--indent-type", "spaces", "--indent-width", "4" },
                 },
