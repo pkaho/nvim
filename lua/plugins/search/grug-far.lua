@@ -16,7 +16,7 @@ return {
                 end,
                 mode = { "n", "x" },
                 desc = "Search and Replace",
-            }
+            },
         },
         opts = { headerMaxWidth = 80 },
     },

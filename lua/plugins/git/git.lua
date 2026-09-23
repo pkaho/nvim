@@ -77,6 +77,8 @@ return {
 
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 
+                -- 项目根检测见 lua/config/root.lua（LazyVim util/root 的精简版）
+                local root_git = require("config.root").git
                 map({ "n" }, "<leader>gg", function () Snacks.lazygit({ cwd = root_git() }) end, "Lazygit (Root Dir)" )
                 map({ "n" }, "<leader>gG", function () Snacks.lazygit() end, "Lazygit (cwd)" )
                 map({ "n" }, "<leader>gL", function() Snacks.picker.git_log() end, "Git Log (cwd)" )

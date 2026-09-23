@@ -1,0 +1,8 @@
+# stylua 配置：格式化本仓库全部 lua 代码（lua/ 目录）
+# 与 lua/plugins/lang/formatter.lua 中 conform 的 stylua 参数保持一致
+# 手动执行：stylua lua/  （或 :ConformInfo 查看格式化器配置）
+column_width = 120
+indent_type = "Spaces"
+indent_width = 4
+line_endings = "Unix"
+syntax = "Lua52" # autocmds.lua 使用 Lua 5.2 的 ::label:: 语法（goto continue）

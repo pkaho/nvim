@@ -27,20 +27,20 @@ return {
         opts = {
             show_numbers = true,
             show_cursorline = true,
-        }
+        },
     },
 
     -- range-highlight: 高亮命令模式选中的文本范围
     {
         "winston0410/range-highlight.nvim",
         event = "VeryLazy",
-        opts = {}
+        opts = {},
     },
 
     -- comfy-line-numbers: 左手完成[n]操作
     {
         "mluders/comfy-line-numbers.nvim",
         lazy = false, -- 行号渲染需启动时生效, 插件很小不影响启动速度
-        opts = {}
+        opts = {},
     },
 }

@@ -15,7 +15,7 @@ return {
             },
             checkbox = {
                 enabled = false,
-            }
-        }
-    }
+            },
+        },
+    },
 }

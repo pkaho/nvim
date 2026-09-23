@@ -74,15 +74,15 @@ return {
         event = "VeryLazy",
         opts = {
             mappings = {
-                add = "gsa",            -- 添加 surround, 如 gsa) 括号包当前词
-                delete = "gsd",         -- 删除 surround
-                find = "gsf",           -- 向右查找 surround
-                find_left = "gsF",      -- 向左查找 surround
-                highlight = "gsh",      -- 高亮当前 surround
-                replace = "gsr",        -- 替换 surround, 如 gsr)"
+                add = "gsa", -- 添加 surround, 如 gsa) 括号包当前词
+                delete = "gsd", -- 删除 surround
+                find = "gsf", -- 向右查找 surround
+                find_left = "gsF", -- 向左查找 surround
+                highlight = "gsh", -- 高亮当前 surround
+                replace = "gsr", -- 替换 surround, 如 gsr)"
                 update_n_lines = "gsn", -- 修改底部显示行数
-                suffix_last = "l",      -- 同类型多个 surround 时, 选择最后一个
-                suffix_next = "n",      -- 同类型多个 surround 时, 选择下一个
+                suffix_last = "l", -- 同类型多个 surround 时, 选择最后一个
+                suffix_next = "n", -- 同类型多个 surround 时, 选择下一个
             },
         },
     },

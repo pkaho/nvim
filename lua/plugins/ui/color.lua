@@ -3,7 +3,7 @@ return {
     {
         "catgoose/nvim-colorizer.lua",
         event = { "BufReadPost", "BufNewFile" }, -- 打开文件时才高亮颜色
-        opts = {}
+        opts = {},
     },
 
     -- ccc: 交互式颜色选择器
@@ -12,7 +12,7 @@ return {
         "uga-rosa/ccc.nvim",
         cmd = "CccPick",
         keys = {
-            { "<leader>uC", "<CMD>CccPick<CR>", desc = "Color Pick (ccc)" }
+            { "<leader>uC", "<CMD>CccPick<CR>", desc = "Color Pick (ccc)" },
         },
         opts = {},
     },

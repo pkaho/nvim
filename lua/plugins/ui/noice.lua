@@ -8,18 +8,48 @@ return {
             "rcarriga/nvim-notify",
         },
         keys = {
-            { "<leader>snl", function() require("noice").cmd("last") end,    desc = "Noice Last Message" },
-            { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-            { "<leader>sna", function() require("noice").cmd("all") end,     desc = "Noice All" },
-            { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-            { "<leader>snt", function() require("noice").cmd("pick") end,    desc = "Noice Picker" },
+            {
+                "<leader>snl",
+                function()
+                    require("noice").cmd("last")
+                end,
+                desc = "Noice Last Message",
+            },
+            {
+                "<leader>snh",
+                function()
+                    require("noice").cmd("history")
+                end,
+                desc = "Noice History",
+            },
+            {
+                "<leader>sna",
+                function()
+                    require("noice").cmd("all")
+                end,
+                desc = "Noice All",
+            },
+            {
+                "<leader>snd",
+                function()
+                    require("noice").cmd("dismiss")
+                end,
+                desc = "Dismiss All",
+            },
+            {
+                "<leader>snt",
+                function()
+                    require("noice").cmd("pick")
+                end,
+                desc = "Noice Picker",
+            },
             {
                 "<S-Enter>",
                 function()
                     require("noice").redirect(vim.fn.getcmdline())
                 end,
                 desc = "Redirect Cmdline",
-                mode = "c"
+                mode = "c",
             },
         },
         opts = {
@@ -73,6 +103,6 @@ return {
                 vim.cmd([[message clear]])
             end
             require("noice").setup(opts)
-        end
+        end,
     },
 }

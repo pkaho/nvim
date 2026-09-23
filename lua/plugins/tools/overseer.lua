@@ -39,7 +39,7 @@ return {
                 end,
                 desc = "Run Shell Command (pwsh on Windows)",
             },
-            { "<leader>ot", "<cmd>OverseerToggle<CR>",     desc = "Toggle Task List" },
+            { "<leader>ot", "<cmd>OverseerToggle<CR>", desc = "Toggle Task List" },
             { "<leader>oa", "<cmd>OverseerTaskAction<CR>", desc = "Task Action" },
         },
     },

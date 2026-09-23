@@ -8,13 +8,6 @@ local function term_nav(dir)
     end
 end
 
-local function root_git()
-    local root = M.get()
-    local git_root = vim.fs.find(".git", { path = root, upward = true })[1]
-    local ret = git_root and vim.fn.fnamemodify(git_root, ":h") or root
-    return ret
-end
-
 return {
     -- snacks.nvim: 多功能工具集
     {

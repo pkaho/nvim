@@ -1,4 +1,4 @@
-﻿local opt = vim.opt
+local opt = vim.opt
 
 -- 新UI，收缩长提示消息，末尾展示省略行数，如：[+x]
 require("vim._core.ui2").enable()

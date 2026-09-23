@@ -8,7 +8,7 @@ vim.lsp.config("lua_ls", {
     settings = {
         Lua = {
             runtime = { version = "LuaJIT" }, -- Neovim 内置 LuaJIT，避免按 Lua 5.4 推断 API
-            telemetry = { enable = false },  -- 关闭遥测上报
+            telemetry = { enable = false }, -- 关闭遥测上报
             diagnostics = {
                 -- LuaLS 3.9+ 不再默认把 require 视为全局，需显式声明
                 globals = { "vim", "require" },

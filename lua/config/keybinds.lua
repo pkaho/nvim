@@ -76,16 +76,7 @@ map({ "n" }, "<C-Down>", "<CMD>resize -2<CR>", { desc = "Decrease Window Height"
 map({ "n" }, "<C-Left>", "<CMD>vertical resize -2<CR>", { desc = "Decrease Window Width" })
 map({ "n" }, "<C-Right>", "<CMD>vertical resize +2<CR>", { desc = "Increase Window Width" })
 
--- tab 相关
-map({ "n" }, "<leader><tab><tab>", "<CMD>tabnew<CR>", { desc = "New Tab" })
-map({ "n" }, "<leader><tab>]", "<CMD>tabnext<CR>", { desc = "Next Tab" })
-map({ "n" }, "<leader><tab>[", "<CMD>tabprevious<CR>", { desc = "Previous Tab" })
-map({ "n" }, "<leader><tab>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
-map({ "n" }, "<leader><tab>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
-map({ "n" }, "<leader><tab>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
-map({ "n" }, "<leader><tab>d", "<CMD>tabclose<CR>", { desc = "Close Tab" })
-
--- tabs
+-- tab 相关（<leader><Tab>*；注意 <tab> 与 <Tab> 是同一按键，勿重复注册）
 map("n", "<leader><Tab>l", "<CMD>tablast<CR>", { desc = "Last Tab" })
 map("n", "<leader><Tab>o", "<CMD>tabonly<CR>", { desc = "Close Other Tabs" })
 map("n", "<leader><Tab>f", "<CMD>tabfirst<CR>", { desc = "First Tab" })
