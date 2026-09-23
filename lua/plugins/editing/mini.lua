@@ -64,7 +64,11 @@ return {
     {
         "echasnovski/mini.align",
         event = "VeryLazy",
-        opts = {},
+        opts = {
+            -- gA 预览是否禁用错误类反馈的显示
+            -- 如果设置 false，opts.cmdheight 不能设为0，否则会出现回车不生效，并且光标跳到反馈栏的情况
+            silent = false,
+        },
     },
 
     -- mini.surround: 围绕现有内容加/改/删括号引号

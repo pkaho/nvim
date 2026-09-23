@@ -77,7 +77,6 @@ opt.concealcursor = "nv" -- 控制光标行隐藏规则：Normal/Visual 模式�
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } -- 自定义不可见字符样式
 opt.list = true -- 显示 Tab、尾随空格等不可见字符
 opt.ruler = false -- 行列信息由 lualine 接管; 开启时会在 dashboard 等禁用状态栏的界面右下角残留行列显示
-opt.cmdheight = 0 -- 不常驻命令行行, 消除全局状态栏(lualine)下方的空行; 有命令/消息时临时显示
 opt.showmode = false -- 关闭底部原生 `-- INSERT --` 模式显示，这里关闭会影响 noice.api.status.mode 的显示
 -- 自定义 UI 填充字符（替换默认 ASCII 字符，需配合 Nerd Font 显示）
 opt.fillchars = {
