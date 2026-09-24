@@ -30,7 +30,7 @@ map({ "n" }, "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map({ "n" }, "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- 查看原生 man printf，而不是 LSP 的悬停文档
-map({ "n" }, "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+map({ "n" }, "<leader>K", "<CMD>norm! K<cr>", { desc = "Keywordprg" })
 -- 快捷在上/下添加注释
 map({ "n" }, "gco", "o<Esc>Vcx<Esc><CMD>normal gcc<CR>fxa<BS>", { desc = "Add Comment Below" })
 map({ "n" }, "gcO", "O<Esc>Vcx<Esc><CMD>normal gcc<CR>fxa<BS>", { desc = "Add Comment Above" })

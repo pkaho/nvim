@@ -17,7 +17,7 @@ return {
             },
         },
         keys = {
-            { "<leader>or", "<cmd>OverseerRun<CR>", desc = "Run Task" },
+            { "<leader>or", "<CMD>OverseerRun<CR>", desc = "Run Task" },
             {
                 "<leader>oR",
                 function()
@@ -37,8 +37,8 @@ return {
                 end,
                 desc = "Run Shell Command (pwsh on Windows)",
             },
-            { "<leader>ot", "<cmd>OverseerToggle<CR>", desc = "Toggle Task List" },
-            { "<leader>oa", "<cmd>OverseerTaskAction<CR>", desc = "Task Action" },
+            { "<leader>ot", "<CMD>OverseerToggle<CR>", desc = "Toggle Task List" },
+            { "<leader>oa", "<CMD>OverseerTaskAction<CR>", desc = "Task Action" },
         },
     },
 
