@@ -1,6 +1,6 @@
-# lazy-lock.json 需要提交：锁定插件版本，换机器/回滚时可复现
-# nvim-pack-lock.json 为 nvim 0.12 rocks 实验性锁文件，保持忽略
-nvim-pack-lock.json
+# 避免每次更新都产生提交噪音
+# （需要版本复现时可用 :Lazy restore / lazy-lock.json 手动保留）
+lazy-lock.json
 
-# gA 对齐测试时误保存的无名 buffer 残留（仓库根目录）
-/Untitled
+# nvim-pack-lock.json 为 nvim 0.12 rocks 实验性锁文件
+nvim-pack-lock.json

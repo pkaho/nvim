@@ -1,5 +1,5 @@
--- LSP 核心配置: mason 服务器管理 / 补全引擎 / LSP 客户端与全局按键
--- 按语言拆分的 server 专属配置放在本目录的其他文件 (如 lua.lua)
+-- LSP 核心配置：mason 服务器管理 / 补全引擎 / LSP 客户端与全局按键
+-- 按语言拆分的 server 专属配置放在本目录的其他文件（如 lua.lua）
 return {
     -- mason: LSP 服务器 / 格式化 / 静态检查工具的安装与管理
     { "mason-org/mason.nvim", opts = {} },
@@ -114,41 +114,54 @@ return {
                     )
                 end
 
+                -- stylua: ignore start
                 -- 跳转
-                map("n", "gd", vim.lsp.buf.definition, "Goto Definition")
-                map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration")
-                map("n", "gr", vim.lsp.buf.references, "Goto References")
-                map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation")
-                map("n", "gy", vim.lsp.buf.type_definition, "Goto Type Definition")
-                map("n", "gO", vim.lsp.buf.document_symbol, "Document Symbol")
+                map({ "n" }, "gd", vim.lsp.buf.definition,      "Goto Definition")
+                map({ "n" }, "gD", vim.lsp.buf.declaration,     "Goto Declaration")
+                map({ "n" }, "gr", vim.lsp.buf.references,      "Goto References")
+                map({ "n" }, "gI", vim.lsp.buf.implementation,  "Goto Implementation")
+                map({ "n" }, "gy", vim.lsp.buf.type_definition, "Goto Type Definition")
+                map({ "n" }, "gO", vim.lsp.buf.document_symbol, "Document Symbol")
+                -- Snacks 跳转
+                map({ "n" }, "<leader>cpd",  function() Snacks.picker.lsp_definitions() end,      "Goto Definition (picker)")
+                map({ "n" }, "<leader>cpD",  function() Snacks.picker.lsp_declarations() end,     "Goto Declaration (picker)")
+                map({ "n" }, "<leader>cpr",  function() Snacks.picker.lsp_references() end,       "Goto References (picker)")
+                map({ "n" }, "<leader>cpI",  function() Snacks.picker.lsp_implementations() end,  "Goto Implementation (picker)")
+                map({ "n" }, "<leader>cpy",  function() Snacks.picker.lsp_type_definitions() end, "Goto Type Definition (picker)")
+                map({ "n" }, "<leader>cpai", function() Snacks.picker.lsp_incoming_calls() end,   "Calls Incoming (picker)")
+                map({ "n" }, "<leader>cpao", function() Snacks.picker.lsp_outgoing_calls() end,   "Calls Outgoing (picker)")
+                -- Symbol
+                map({ "n" }, "<leader>ss", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
+                map({ "n" }, "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, "LSP Workspace Symbols")
+                -- stylua: ignore end
 
                 -- 悬浮文档 / 签名
-                map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+                map({ "n" }, "K", vim.lsp.buf.hover, "Hover Documentation")
                 -- 签名帮助
-                map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+                map({ "i" }, "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
-                -- hover/signature 浮窗内用 <c-f>/<c-b> 滚动, 无浮窗时回退默认翻页
-                map({ "i", "n", "s" }, "<c-f>", function()
+                -- hover/signature 浮窗内用 <C-f>/<C-b> 滚动, 无浮窗时回退默认翻页
+                map({ "i", "n", "s" }, "<C-f>", function()
                     if not require("noice.lsp").scroll(4) then
                         return "<c-f>"
                     end
                 end, "Scroll Float Forward", { expr = true })
-                map({ "i", "n", "s" }, "<c-b>", function()
+                map({ "i", "n", "s" }, "<C-b>", function()
                     if not require("noice.lsp").scroll(-4) then
                         return "<c-b>"
                     end
                 end, "Scroll Float Backward", { expr = true })
 
                 -- 重构
-                map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
-                map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
-                map("n", "<leader>co", function()
+                map({ "n" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+                map({ "n" }, "<leader>cr", vim.lsp.buf.rename, "Rename")
+                map({ "n" }, "<leader>co", function()
                     vim.lsp.buf.code_action({
                         apply = true,
                         context = { only = { "source.organizeImports" }, diagnostics = {} },
                     })
                 end, "Organize Imports")
-                map("n", "<leader>cR", "<CMD>LspRestart<CR>", "Restart LSP")
+                map({ "n" }, "<leader>cR", "<CMD>LspRestart<CR>", "Restart LSP")
             end
 
             -- 诊断显示样式

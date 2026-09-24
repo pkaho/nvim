@@ -1,9 +1,10 @@
+-- mini.ai：选中整个 buffer 的文本对象（ai_buffer）
 local function ai_buffer(ai_type)
     local start_line, end_line = 1, vim.fn.line("$")
     if ai_type == "i" then
-        -- Skip first and last blank lines for `i` textobject
+        -- 跳过首尾空行（i 文本对象）
         local first_nonblank, last_nonblank = vim.fn.nextnonblank(start_line), vim.fn.prevnonblank(end_line)
-        -- Do nothing for buffer with all blanks
+        -- 全空 buffer 不处理
         if first_nonblank == 0 or last_nonblank == 0 then
             return { from = { line = start_line, col = 1 } }
         end
@@ -51,7 +52,7 @@ return {
                     },
                     -- 选中整个 buffer 内容
                     g = ai_buffer,
-                    -- 函数调用（包含带命名空间 a.b.func()），u = Usage 调用
+                    -- 函数调用（含命名空间 a.b.func()），u = Usage 调用
                     u = mini_ai.gen_spec.function_call(),
                     -- 纯函数调用，函数名不允许带 . 点（只匹配 func()，不匹配 obj.func()）
                     U = mini_ai.gen_spec.function_call({ name_pattern = "[%w_]" }),

@@ -1,32 +1,3 @@
---[[
-dial.nvim：<C-a> / <C-x> 递增 / 递减光标下的数字、日期、布尔、常量等
-====================================================================
-
-【核心概念】
-  augend          一种"可递增的原子"：十进制数、十六进制数、日期、布尔值、自定义常量表……
-  group           一组 augend 的集合，按名称注册（dial.nvim 原生概念，default 为兜底组）
-  filetype 分组   dial.nvim 原生机制：注册"文件类型 → augend 列表"后自动生效；
-                  未映射的文件类型回退到 default 组（无需运行时查表）
-
-【键位】（均支持 count，如 3<C-a> = 连续递增 3 次）
-  <C-a>           递增（normal / visual 通用，visual 下只改选中区域）
-  <C-x>           递减
-  g<C-a>          g 操作符版递增：作用于 motion 范围，如 g<C-a>w 递增一个单词
-  g<C-x>          g 操作符版递减
-
-【文件类型分组策略】
-  每种文件类型的有效递增类型 = 专属 augend ∪ default 公共基线
-  （如 typescript 文件 = let/const 专属 + 所有公共类型）
-
-【如何扩展】
-  1. 所有文件都想要一种新递增类型  → 往 default_augends 加一行
-  2. 某文件类型加专属类型          → 往对应 xxx_augends 加一行
-  3. 新增文件类型映射              → 在 on_filetype 的表里加一行（可共享同一张表）
-  4. 改触发键位                    → 改 keys 表
---]]
-
--- expr keymap 回调：按键时求值，返回 dial 的按键序列字符串（<Cmd>...<CR>）
--- increment: true=递增 false=递减；operator: 是否为 g 操作符版（作用于 motion）
 local function dial_rhs(increment, operator)
     local mode = vim.fn.mode(true)
     -- v: 字符选区  V: 行选区  <C-v>: 块选区
@@ -37,6 +8,7 @@ local function dial_rhs(increment, operator)
 end
 
 return {
+    -- dial.nvim
     {
         "monaqa/dial.nvim",
         keys = {
@@ -102,7 +74,7 @@ return {
                 }),
             }
 
-            -- 各文件类型的专属 augend
+            -- 各文件类型的专属 augend（有效类型 = 专属 ∪ 公共基线）
             local vue_augends = {
                 augend.constant.new({ elements = { "let", "const" } }),
                 augend.hexcolor.new({ case = "lower" }),
@@ -140,8 +112,7 @@ return {
             -- 注册 default 组（filetype 未映射时的兜底）
             augends:register_group({ default = default_augends })
 
-            -- 文件类型映射：专属 ∪ 公共基线（与默认行为保持一致）
-            -- 共享表引用：sass/scss 复用 css，js/ts 系列复用 typescript
+            -- 文件类型映射：sass/scss 复用 css，js/ts 系列复用 typescript（共享表引用）
             local function with_default(augs)
                 vim.list_extend(augs, default_augends)
                 return augs
@@ -163,6 +134,122 @@ return {
                 lua = with_default(lua_augends),
                 python = with_default(python_augends),
             })
+        end,
+    },
+
+    -- ultimate-autopair: 自动配对/补全括号引号
+    {
+        "altermo/ultimate-autopair.nvim",
+        event = { "InsertEnter", "CmdlineEnter" },
+        opts = {
+            pair_cmap = false, -- 命令行补全
+        },
+    },
+
+    -- treesj: 拆分/合并代码块
+    {
+        "Wansmer/treesj",
+        cmd = "TSJToggle",
+        opts = {
+            use_default_keymaps = false, -- 关闭默认按键, 统一用 <leader>cj 切换
+        },
+        keys = {
+            { "<leader>cj", "<cmd>TSJToggle<CR>", desc = "Split/Join Bracketed" },
+        },
+    },
+
+    -- numb: 跳转行号时预览该位置内容
+    {
+        "nacro90/numb.nvim",
+        event = "CmdlineEnter", -- 仅在输入命令行时加载
+        opts = {
+            show_numbers = true,
+            show_cursorline = true,
+        },
+    },
+
+    -- range-highlight: 高亮命令模式选中的文本范围
+    {
+        "winston0410/range-highlight.nvim",
+        event = "VeryLazy",
+        opts = {},
+    },
+
+    -- comfy-line-numbers: 左手完成[n]操作
+    {
+        "mluders/comfy-line-numbers.nvim",
+        lazy = false, -- 行号渲染需启动时生效, 插件很小不影响启动速度
+        opts = {},
+    },
+
+    -- multicursor.nvim: 多光标编辑（官方文档: :h multicursor）
+    {
+        "jake-stewart/multicursor.nvim",
+        branch = "1.0",
+        event = "VeryLazy",
+        config = function()
+            local mc = require("multicursor-nvim")
+            mc.setup()
+
+            local map = vim.keymap.set
+
+            -- stylua: ignore start
+            -- 多光标键位统一在 <leader>m 组 (which-key 显示为 "multi-cursor")
+            -- 行光标: k/j = 上/下 (vim 方向), 大写 = 跳过该行
+            -- 注: 不用 <M-Up>/<M-Down>, 因为 <Up>/<Down> 已被 keybinds.lua 映射为 gj/gk,
+            --     <C-Up>/<C-Down> 被用于窗口缩放
+            map({ "n", "x" }, "<leader>mk", function() mc.lineAddCursor(-1) end, { desc = "Add Cursor Above" })
+            map({ "n", "x" }, "<leader>mj", function() mc.lineAddCursor(1) end, { desc = "Add Cursor Below" })
+            map({ "n", "x" }, "<leader>mK", function() mc.lineSkipCursor(-1) end, { desc = "Skip Cursor Above" })
+            map({ "n", "x" }, "<leader>mJ", function() mc.lineSkipCursor(1) end, { desc = "Skip Cursor Below" })
+
+            -- 匹配当前单词或选区: n/N = 向后/向前添加光标, s/S = 跳过匹配
+            -- 注: 官方示例跳过匹配用 <leader>s/S, 与 which-key 的 search 组冲突
+            map({ "n", "x" }, "<leader>mn", function() mc.matchAddCursor(1) end, { desc = "Add Cursor Next Match" })
+            map({ "n", "x" }, "<leader>mN", function() mc.matchAddCursor(-1) end, { desc = "Add Cursor Prev Match" })
+            map({ "n", "x" }, "<leader>ms", function() mc.matchSkipCursor(1) end, { desc = "Skip Next Match" })
+            map({ "n", "x" }, "<leader>mS", function() mc.matchSkipCursor(-1) end, { desc = "Skip Prev Match" })
+            -- stylua: ignore end
+
+            -- 添加所有匹配: 一次给文档中所有匹配单词加光标
+            map({ "n", "x" }, "<leader>mA", mc.matchAllAddCursors, { desc = "Add Cursors to All Matches" })
+
+            -- Ctrl + 鼠标左键 添加/移除光标
+            map({ "n" }, "<C-leftmouse>", mc.handleMouse, { desc = "Add/Remove Cursor (mouse)" })
+            map({ "n" }, "<C-leftdrag>", mc.handleMouseDrag, { desc = "Add Cursor Drag (mouse)" })
+            map({ "n" }, "<C-leftrelease>", mc.handleMouseRelease, { desc = "Release Mouse Cursor" })
+
+            -- Ctrl-q 切换光标开关
+            map({ "n", "x" }, "<C-q>", mc.toggleCursor, { desc = "Toggle Cursors" })
+
+            -- 以下映射只在存在多个光标时生效 (keymap layer)
+            mc.addKeymapLayer(function(layerSet)
+                -- 切换主光标
+                layerSet({ "n", "x" }, "<left>", mc.prevCursor)
+                layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+
+                -- 删除主光标 (官方示例 <leader>x 与 trouble 的 diagnostics 组冲突, 归入 <leader>m 组)
+                layerSet({ "n", "x" }, "<leader>md", mc.deleteCursor)
+
+                -- Esc: 有光标时先启用, 再次按清除所有光标
+                layerSet({ "n" }, "<esc>", function()
+                    if not mc.cursorsEnabled() then
+                        mc.enableCursors()
+                    else
+                        mc.clearCursors()
+                    end
+                end)
+            end)
+
+            -- 自定义光标外观
+            local hl = vim.api.nvim_set_hl
+            hl(0, "MultiCursorCursor", { reverse = true })
+            hl(0, "MultiCursorVisual", { link = "Visual" })
+            hl(0, "MultiCursorSign", { link = "SignColumn" })
+            hl(0, "MultiCursorMatchPreview", { link = "Search" })
+            hl(0, "MultiCursorDisabledCursor", { reverse = true })
+            hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+            hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
         end,
     },
 }

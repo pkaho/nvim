@@ -19,6 +19,37 @@ local map = vim.keymap.set
 
 map({ "n" }, "<Esc>", "<CMD>nohlsearch<CR>", { desc = "Stop Highlight" })
 map({ "n" }, "<leader>qq", "<CMD>qa<CR>", { desc = "Quit" })
+-- 清除搜索高亮 + 更新 diff 差异 + <Ctrl-L> 重绘屏幕
+map(
+    { "n" },
+    "<leader>ur",
+    "<CMD>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
+    { desc = "Redraw / Clear hlsearch / Diff Update" }
+)
+map({ "n" }, "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
+map({ "n" }, "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
+
+-- 查看原生 man printf，而不是 LSP 的悬停文档
+map({ "n" }, "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+-- 快捷在上/下添加注释
+map({ "n" }, "gco", "o<Esc>Vcx<Esc><CMD>normal gcc<CR>fxa<BS>", { desc = "Add Comment Below" })
+map({ "n" }, "gcO", "O<Esc>Vcx<Esc><CMD>normal gcc<CR>fxa<BS>", { desc = "Add Comment Above" })
+-- 新文件
+map({ "n" }, "<leader>fn", "<CMD>enew<CR>", { desc = "New File" })
+-- location list
+map({ "n" }, "<leader>xl", function()
+    local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
+    if not success and err then
+        vim.notify(err, vim.log.levels.ERROR)
+    end
+end, { desc = "Location List" })
+-- quickfix list
+map({ "n" }, "<leader>xq", function()
+    local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
+    if not success and err then
+        vim.notify(err, vim.log.levels.ERROR)
+    end
+end, { desc = "Quickfix List" })
 
 -- Insert 模式快捷键
 map({ "i" }, "jk", "<Esc>", { desc = "Quit Insert Mode" })
@@ -60,8 +91,8 @@ map({ "n" }, "<A-j>", '<CMD>execute "move .+" . v:count1<CR>==', { desc = "Move 
 map({ "n" }, "<A-k>", '<CMD>execute "move .-" . (v:count1 + 1)<CR>==', { desc = "Move Up" })
 map({ "i" }, "<A-j>", "<esc><CMD>m .+1<CR>==gi", { desc = "Move Down" })
 map({ "i" }, "<A-k>", "<esc><CMD>m .-2<CR>==gi", { desc = "Move Up" })
-map({ "v" }, "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<CR>gv=gv", { desc = "Move Down" })
-map({ "v" }, "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<CR>gv=gv", { desc = "Move Up" })
+map({ "v" }, "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<CR>gv=gv", { desc = "Move Down", silent = true })
+map({ "v" }, "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<CR>gv=gv", { desc = "Move Up", silent = true })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 -- 在/或者?的搜索模式中, n始终向下, N始终向上
