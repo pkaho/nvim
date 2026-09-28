@@ -1,5 +1,3 @@
--- LSP 核心配置：mason 服务器管理 / 补全引擎 / LSP 客户端与全局按键
--- 按语言拆分的 server 专属配置放在本目录的其他文件（如 lua.lua）
 return {
     -- mason: LSP 服务器 / 格式化 / 静态检查工具的安装与管理
     { "mason-org/mason.nvim", opts = {} },
