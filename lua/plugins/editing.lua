@@ -175,13 +175,6 @@ return {
         opts = {},
     },
 
-    -- comfy-line-numbers: 左手完成[n]操作
-    {
-        "mluders/comfy-line-numbers.nvim",
-        lazy = false, -- 行号渲染需启动时生效, 插件很小不影响启动速度
-        opts = {},
-    },
-
     -- multicursor.nvim: 多光标编辑（官方文档: :h multicursor）
     {
         "jake-stewart/multicursor.nvim",
