@@ -230,6 +230,23 @@ return {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+        -- 折叠：有对应 parser 的语言用 treesitter 语法树折叠，否则用全局默认的 indent（options.lua）
+        init = function()
+            local parser_dir = vim.fn.stdpath("data") .. "/site/parser"
+            local function apply_fold()
+                local ft = vim.bo.filetype -- autocmd 回调中当前 buffer 即触发事件的文件
+                local lang = ft ~= "" and vim.treesitter.language.get_lang(ft)
+                local has = lang and vim.uv.fs_stat(parser_dir .. "/" .. lang .. ".so")
+                vim.wo.foldmethod = has and "expr" or "indent"
+                if has then
+                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                end
+            end
+            apply_fold() -- 插件加载时正在打开的文件
+            vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+                callback = apply_fold,
+            })
+        end,
         -- 安装/更新插件时同步安装非内置 parser (TSInstall 为异步任务, 轮询等待完成; 已装的自动跳过)
         build = function()
             local langs = { "python", "ledger", "diff", "regex" }
