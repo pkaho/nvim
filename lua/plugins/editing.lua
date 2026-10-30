@@ -13,9 +13,9 @@ return {
         "monaqa/dial.nvim",
         keys = {
             -- stylua: ignore start
-            { "<C-a>", function() return dial_rhs(true) end, expr = true, desc = "Increment", mode = { "n", "v" } },
-            { "<C-x>", function() return dial_rhs(false) end, expr = true, desc = "Decrement", mode = { "n", "v" } },
-            { "g<C-a>", function() return dial_rhs(true, true) end, expr = true, desc = "Increment (motion)", mode = { "n", "x" } },
+            { "<C-a>",  function() return dial_rhs(true) end,        expr = true, desc = "Increment",          mode = { "n", "v" } },
+            { "<C-x>",  function() return dial_rhs(false) end,       expr = true, desc = "Decrement",          mode = { "n", "v" } },
+            { "g<C-a>", function() return dial_rhs(true, true) end,  expr = true, desc = "Increment (motion)", mode = { "n", "x" } },
             { "g<C-x>", function() return dial_rhs(false, true) end, expr = true, desc = "Decrement (motion)", mode = { "n", "x" } },
             -- stylua: ignore end
         },
@@ -25,13 +25,13 @@ return {
 
             -- 公共基线：所有文件类型都可用的递增类型
             local default_augends = {
-                augend.integer.alias.decimal, -- 非负十进制 (0, 1, 2, ...)
-                augend.integer.alias.decimal_int, -- 可负十进制
-                augend.integer.alias.hex, -- 十六进制 (0x01, 0x1a1f, ...)
-                augend.date.alias["%Y/%m/%d"], -- 日期 (2026/09/22)
-                augend.constant.alias.en_weekday, -- 星期缩写 (Mon, Tue, ...)
+                augend.integer.alias.decimal,          -- 非负十进制 (0, 1, 2, ...)
+                augend.integer.alias.decimal_int,      -- 可负十进制
+                augend.integer.alias.hex,              -- 十六进制 (0x01, 0x1a1f, ...)
+                augend.date.alias["%Y/%m/%d"],         -- 日期 (2026/09/22)
+                augend.constant.alias.en_weekday,      -- 星期缩写 (Mon, Tue, ...)
                 augend.constant.alias.en_weekday_full, -- 星期全称 (Monday, ...)
-                augend.constant.new({ -- 序数词 (first → tenth 循环)
+                augend.constant.new({                  -- 序数词 (first → tenth 循环)
                     elements = {
                         "first",
                         "second",
@@ -67,7 +67,7 @@ return {
                 }),
                 augend.constant.alias.bool, -- 小写布尔 (true ↔ false)
                 augend.constant.alias.Bool, -- 大写布尔 (True ↔ False)
-                augend.constant.new({ -- 逻辑运算符 (&& ↔ ||)
+                augend.constant.new({       -- 逻辑运算符 (&& ↔ ||)
                     elements = { "&&", "||" },
                     word = false,
                     cyclic = true,
@@ -245,4 +245,20 @@ return {
             hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
         end,
     },
+
+    {
+        "linux-cultist/venv-selector.nvim",
+        ft = "python",
+        keys = {
+            { "<leader>cv", "<CMD>VenvSelect<CR>", desc = "Python venv Select" },
+        },
+        opts = {
+            -- 阻止 venv-selector 覆盖 vim.notify, 避免干扰 noice
+            options = {
+                override_notify = false,
+                picker = "snacks",
+            },
+            search = {}, -- 本地搜索规则
+        }
+    }
 }
