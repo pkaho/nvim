@@ -9,7 +9,9 @@ return {
             -- 首次启动自动安装的 LSP 服务器
             ensure_installed = {
                 "lua_ls",
-                "pyright",
+                -- python
+                "basedpyright",
+                "ruff",
             },
         },
     },
@@ -67,8 +69,8 @@ return {
         opts = {
             library = {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
+                { path = "snacks.nvim",        words = { "Snacks" } },
+                { path = "nvim-lspconfig",     words = { "lspconfig.settings" } },
             },
         },
     },
@@ -78,10 +80,10 @@ return {
         "dnlhc/glance.nvim",
         -- 仅由 keys 懒加载（原先 lazy = false 会取消懒加载，导致启动即加载）
         keys = {
-            { "<leader>cgd", "<CMD>Glance definitions<CR>", desc = "Glance Definition" },
-            { "<leader>cgr", "<CMD>Glance references<CR>", desc = "Glance Reference" },
+            { "<leader>cgd", "<CMD>Glance definitions<CR>",      desc = "Glance Definition" },
+            { "<leader>cgr", "<CMD>Glance references<CR>",       desc = "Glance Reference" },
             { "<leader>cgy", "<CMD>Glance type_definitions<CR>", desc = "Glance Type Definition" },
-            { "<leader>cgm", "<CMD>Glance implementations<CR>", desc = "Glance Implementation" },
+            { "<leader>cgm", "<CMD>Glance implementations<CR>",  desc = "Glance Implementation" },
         },
         opts = {},
     },
@@ -114,20 +116,22 @@ return {
 
                 -- stylua: ignore start
                 -- 跳转
-                map({ "n" }, "gd", vim.lsp.buf.definition,      "Goto Definition")
-                map({ "n" }, "gD", vim.lsp.buf.declaration,     "Goto Declaration")
-                map({ "n" }, "gr", vim.lsp.buf.references,      "Goto References")
-                map({ "n" }, "gI", vim.lsp.buf.implementation,  "Goto Implementation")
+                map({ "n" }, "gd", vim.lsp.buf.definition, "Goto Definition")
+                map({ "n" }, "gD", vim.lsp.buf.declaration, "Goto Declaration")
+                map({ "n" }, "gr", vim.lsp.buf.references, "Goto References")
+                map({ "n" }, "gI", vim.lsp.buf.implementation, "Goto Implementation")
                 map({ "n" }, "gy", vim.lsp.buf.type_definition, "Goto Type Definition")
                 map({ "n" }, "gO", vim.lsp.buf.document_symbol, "Document Symbol")
                 -- Snacks 跳转
-                map({ "n" }, "<leader>cpd",  function() Snacks.picker.lsp_definitions() end,      "Goto Definition (picker)")
-                map({ "n" }, "<leader>cpD",  function() Snacks.picker.lsp_declarations() end,     "Goto Declaration (picker)")
-                map({ "n" }, "<leader>cpr",  function() Snacks.picker.lsp_references() end,       "Goto References (picker)")
-                map({ "n" }, "<leader>cpI",  function() Snacks.picker.lsp_implementations() end,  "Goto Implementation (picker)")
-                map({ "n" }, "<leader>cpy",  function() Snacks.picker.lsp_type_definitions() end, "Goto Type Definition (picker)")
-                map({ "n" }, "<leader>cpai", function() Snacks.picker.lsp_incoming_calls() end,   "Calls Incoming (picker)")
-                map({ "n" }, "<leader>cpao", function() Snacks.picker.lsp_outgoing_calls() end,   "Calls Outgoing (picker)")
+                map({ "n" }, "<leader>cpd", function() Snacks.picker.lsp_definitions() end, "Goto Definition (picker)")
+                map({ "n" }, "<leader>cpD", function() Snacks.picker.lsp_declarations() end, "Goto Declaration (picker)")
+                map({ "n" }, "<leader>cpr", function() Snacks.picker.lsp_references() end, "Goto References (picker)")
+                map({ "n" }, "<leader>cpI", function() Snacks.picker.lsp_implementations() end,
+                    "Goto Implementation (picker)")
+                map({ "n" }, "<leader>cpy", function() Snacks.picker.lsp_type_definitions() end,
+                    "Goto Type Definition (picker)")
+                map({ "n" }, "<leader>cpai", function() Snacks.picker.lsp_incoming_calls() end, "Calls Incoming (picker)")
+                map({ "n" }, "<leader>cpao", function() Snacks.picker.lsp_outgoing_calls() end, "Calls Outgoing (picker)")
                 -- Symbol
                 map({ "n" }, "<leader>ss", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
                 map({ "n" }, "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, "LSP Workspace Symbols")
